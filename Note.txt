@@ -1,0 +1,29 @@
+Web整合：
+	
+0.导入jar包
+	spring-web-5.1.3.RELEASE.jar
+	
+1.Tomcat启动加载配置文件的方法：
+	servlet  -->  init(ServletConfig) -->  <load-on-startup>2
+	filter   -->  init(FilterConfig)  -->  在web.xml注册 过滤器自动调用初始化
+	Listener -->  ServletContextListener   -->  ServletContext对象监听【spring使用】
+	
+	Spring提供监听器 ContextLoaderListener  --> 配置到web.xml <listener><listener-class>中
+		注意：如果只配置监听器，运行报错，因为默认加载xml位置  /WEB-INF/applicationContext.xml
+		
+2.确定配置文件位置，通过系统初始化参数
+	ServletContext初始化参数web.xml
+	<context-param>
+		<param-name>contextConfigLocation
+		<param-value>classpath:applicationContext.xml
+
+3.从ServletContext中获取spring容器（了解）
+	方式1：手动从作用域获取
+		ApplicationContext applicationContext = 
+				(ApplicationContext) this.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+	方式2：通过工具获取
+		ApplicationContext applicationContext2 = 
+				WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
+				
+				
+				
